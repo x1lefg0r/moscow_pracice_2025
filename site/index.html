@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Визитная карточка САПР</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        line-height: 1.6;
+        color: #333;
+        background-color: #e6f3ff;
+      }
+
+      header {
+        background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      header p {
+        font-size: 1.2rem;
+      }
+
+      nav {
+        background-color: #1e90ff;
+        padding: 1rem;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        transition: background-color 0.3s, transform 0.2s;
+      }
+
+      nav a:hover {
+        background-color: #ff6b6b;
+        transform: scale(1.05);
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1.5rem;
+      }
+
+      section {
+        background-color: #fff;
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+      }
+
+      section:hover {
+        transform: translateY(-5px);
+      }
+
+      h2 {
+        color: #ff6b6b;
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
+      }
+
+      .team-member {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        background-color: #f0faff;
+        border-radius: 8px;
+        border-left: 5px solid #ff8e53;
+      }
+
+      .journal-entry {
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        background-color: #f0faff;
+        border-left: 5px solid #1e90ff;
+        border-radius: 8px;
+      }
+
+      .resources-list {
+        list-style: none;
+      }
+
+      .resources-list li {
+        margin-bottom: 1.5rem;
+        font-size: 1.1rem;
+      }
+
+      .resources-list a {
+        color: #ff6b6b;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .resources-list a:hover {
+        text-decoration: underline;
+        color: #ff8e53;
+      }
+
+      .slider {
+        overflow: hidden;
+        position: relative;
+        max-width: 80%;
+        margin: 0 auto 2rem auto;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .slides {
+        display: flex;
+        width: 300%; /* Для трех слайдов */
+        animation: slide 12s infinite;
+      }
+
+      .slide {
+        width: 33.333%; /* Каждый слайд занимает треть контейнера */
+        flex-shrink: 0;
+      }
+
+      .slide img {
+        width: 100%;
+        max-height: 300px;
+        object-fit: cover;
+        border-radius: 10px;
+        display: block;
+      }
+
+      @keyframes slide {
+        0%,
+        33.33% {
+          transform: translateX(0);
+        }
+        33.34%,
+        66.66% {
+          transform: translateX(-33.333%);
+        }
+        66.67%,
+        99.99% {
+          transform: translateX(-66.666%);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+
+      .tech-list {
+        list-style: none;
+        margin-top: 1rem;
+      }
+
+      .tech-list li {
+        margin-bottom: 1rem;
+        padding-left: 1.5rem;
+        position: relative;
+      }
+
+      .tech-list li::before {
+        content: "✔";
+        color: #ff6b6b;
+        position: absolute;
+        left: 0;
+      }
+
+      .to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #ff6b6b;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 50%;
+        text-align: center;
+        cursor: pointer;
+        display: none;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transition: opacity 0.3s, transform 0.3s;
+      }
+
+      .to-top:hover {
+        transform: scale(1.1);
+      }
+
+      footer {
+        background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+        color: white;
+        text-align: center;
+        padding: 1.5rem;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+      }
+
+      @media (max-width: 768px) {
+        nav ul {
+          flex-direction: column;
+          text-align: center;
+          gap: 1rem;
+        }
+
+        .team-member {
+          flex-direction: column;
+        }
+
+        header h1 {
+          font-size: 1.8rem;
+        }
+
+        h2 {
+          font-size: 1.5rem;
+        }
+
+        .slider {
+          max-width: 90%;
+          max-height: 200px;
+        }
+
+        .slide img {
+          max-height: 200px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Визитная карточка САПР-направления</h1>
+      <p>
+        Инновационный проект для представления САПР в современном цифровом
+        формате
+      </p>
+    </header>
+
+    <nav>
+      <ul>
+        <li><a href="#home" class="nav-link">Главная</a></li>
+        <li><a href="#about" class="nav-link">О проекте</a></li>
+        <li><a href="#team" class="nav-link">Участники</a></li>
+        <li><a href="#journal" class="nav-link">Журнал</a></li>
+        <li><a href="#resources" class="nav-link">Ресурсы</a></li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <section id="home">
+        <h2>Добро пожаловать в мир САПР!</h2>
+        <p>
+          Мы рады представить наш проект — яркую и современную визитную карточку
+          САПР-направления, созданную с использованием передовых технологий
+          React. Этот сайт не просто демонстрирует возможности САПР, но и
+          погружает вас в мир инноваций, где дизайн и функциональность идут рука
+          об руку. Здесь вы найдете подробную информацию о нашем проекте,
+          познакомитесь с талантливой командой разработчиков, узнаете о ключевых
+          этапах нашей работы и найдете полезные ресурсы для углубленного
+          изучения темы.
+        </p>
+        <p>
+          Наша цель — сделать САПР-направление ближе и понятнее для всех, кто
+          интересуется современными технологиями проектирования. Ознакомьтесь с
+          нашими достижениями через галерею ниже и присоединяйтесь к нашему
+          путешествию!
+        </p>
+        <div class="slider">
+          <div class="slides">
+            <div class="slide">
+              <img src="./assets/1.png" alt="" />
+            </div>
+            <div class="slide">
+              <img src="./assets/2.png" alt="" />
+            </div>
+            <div class="slide">
+              <img src="./assets/3.png" alt="" />
+            </div>
+            <div class="slide">
+              <img src="./assets/4.png" alt="" />
+            </div>
+            <div class="slide">
+              <img src="./assets/5.png" alt="" />
+            </div>
+            <div class="slide">
+              <img src="./assets/6.png" alt="" />
+            </div>
+            <div class="slide">
+              <img src="./assets/7.png" alt="" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about">
+        <h2>О проекте</h2>
+        <p>
+          Проект «Визитная карточка САПР-направления» — это амбициозная
+          инициатива, направленная на создание стильного и информативного
+          веб-сайта, который представляет САПР (системы автоматизированного
+          проектирования) в новом свете. Мы использовали React, чтобы создать
+          динамичный и интерактивный интерфейс, который не только радует глаз,
+          но и обеспечивает удобство использования. Наша команда стремилась к
+          тому, чтобы каждая деталь сайта отражала профессионализм и
+          инновационный дух САПР.
+        </p>
+        <p>
+          Работа над проектом включала несколько ключевых этапов: от создания
+          эстетичного дизайна в Figma до верстки, тестирования и размещения
+          сайта на хостинге. Мы тесно сотрудничали с руководителем проекта,
+          чтобы учесть все пожелания и добавить уникальные элементы,
+          подчеркивающие значимость САПР в современном мире. Этот сайт — не
+          просто визитная карточка, а полноценный цифровой продукт, который
+          вдохновляет и информирует.
+        </p>
+        <h3>Используемые технологии</h3>
+        <ul class="tech-list">
+          <li>
+            <strong>React</strong>: Фреймворк для создания динамичного и
+            интерактивного интерфейса, обеспечивающий быструю работу и
+            модульность кода.
+          </li>
+          <li>
+            <strong>Figma</strong>: Инструмент для проектирования интерфейса,
+            который позволил нам создать визуально привлекательный макет.
+          </li>
+          <li>
+            <strong>HTML/CSS</strong>: Основа нашего сайта, обеспечившая
+            структуру и стильное оформление.
+          </li>
+          <li>
+            <strong>GitHub Pages</strong>: Платформа для хостинга, которая
+            сделала наш сайт доступным для всех.
+          </li>
+        </ul>
+      </section>
+
+      <section id="team">
+        <h2>Наша команда</h2>
+        <div class="team-member">
+          <div>
+            <h3>Горькова Ульяна</h3>
+            <p><strong>Роль:</strong> Фронтенд-разработчик, UI/UX-дизайнер</p>
+            <p>
+              Ульяна стала душой визуальной части проекта. Она разработала
+              уникальный дизайн в Figma, тщательно продумав каждую деталь — от
+              цветовой палитры до расположения элементов. Ее подход к
+              UI/UX-дизайну позволил создать интерфейс, который не только
+              эстетически привлекателен, но и интуитивно понятен. Ульяна также
+              активно участвовала в обсуждении функционала, предлагая идеи,
+              которые сделали сайт более интерактивным и запоминающимся.
+            </p>
+          </div>
+        </div>
+        <div class="team-member">
+          <div>
+            <h3>Балынин Егор</h3>
+            <p><strong>Роль:</strong> Фронтенд-разработчик</p>
+            <p>
+              Егор взял на себя основную техническую часть проекта, превратив
+              макеты Ульяны в функциональный сайт с помощью React. Его навыки в
+              программировании позволили реализовать сложные интерактивные
+              компоненты и обеспечить плавную работу сайта. Егор также занимался
+              оптимизацией кода, чтобы сайт загружался быстро и работал
+              безупречно даже на слабых устройствах.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="journal">
+        <h2>Журнал проекта</h2>
+        <div class="journal-entry">
+          <h3>Этап 1: Создание макета в Figma</h3>
+          <p>
+            На первом этапе мы погрузились в создание визуальной концепции
+            сайта. Ульяна разработала несколько вариантов макета в Figma,
+            экспериментируя с цветами, шрифтами и компоновкой. Мы стремились к
+            тому, чтобы дизайн был одновременно минималистичным и выразительным,
+            отражая инновационный дух САПР. После нескольких раундов обсуждений
+            и доработок мы представили финальный макет руководителю, который был
+            одобрен с первого раза.
+          </p>
+        </div>
+        <div class="journal-entry">
+          <h3>Этап 2: Согласование и верстка</h3>
+          <p>
+            После утверждения макета началась активная фаза верстки. Егор взял
+            на себя задачу переноса дизайна в код с использованием React,
+            обеспечивая динамичность и отзывчивость интерфейса. Мы регулярно
+            консультировались с руководителем, чтобы уточнить, какие функции и
+            элементы стоит добавить. Этот этап был насыщенным: мы тестировали
+            различные варианты компоновки и вносили правки, чтобы добиться
+            идеального баланса между формой и функциональностью.
+          </p>
+        </div>
+        <div class="journal-entry">
+          <h3>Этап 3: Корректировка сайта и добавление функционала</h3>
+          <p>
+            После завершения базовой верстки мы приступили к доработке сайта. На
+            основе обратной связи от руководителя мы добавили новые
+            интерактивные элементы, такие как анимации и улучшенные
+            навигационные возможности. Ульяна предложила несколько визуальных
+            улучшений, чтобы сделать сайт еще более привлекательным, а Егор
+            оптимизировал код для повышения производительности. Этот этап
+            позволил нам вывести сайт на новый уровень качества.
+          </p>
+        </div>
+        <div class="journal-entry">
+          <h3>Этап 4: Запуск на хостинге</h3>
+          <p>
+            Финальным аккордом стало размещение сайта на хостинге. Мы провели
+            тщательное тестирование, чтобы убедиться, что все элементы работают
+            корректно, а интерфейс выглядит одинаково хорошо на всех
+            устройствах. После успешного завершения всех проверок сайт был
+            опубликован по адресу
+            <a href="https://hzvui.github.io/cad-front/"
+              >hzvui.github.io/cad-front/</a
+            >. Это был волнующий момент, когда наш труд стал доступен для всех!
+          </p>
+        </div>
+      </section>
+
+      <section id="resources">
+        <h2>Ресурсы</h2>
+        <ul class="resources-list">
+          <li>
+            <a href="https://hzvui.github.io/cad-front/" target="_blank"
+              >Визитная карточка САПР</a
+            >
+            — Наш финальный продукт, который представляет САПР-направление в
+            ярком и современном формате. Посетите сайт, чтобы увидеть результат
+            нашей работы!
+          </li>
+          <li>
+            <a href="https://react.dev/learn" target="_blank"
+              >React Documentation</a
+            >
+            — Официальная документация React, которая стала нашим главным
+            ориентиром при изучении фреймворка и создании динамичного
+            интерфейса.
+          </li>
+          <li>
+            <a href="https://www.figma.com/community" target="_blank"
+              >Figma Community</a
+            >
+            — Платформа с шаблонами и идеями для UI/UX-дизайна, которая
+            вдохновила нас на создание уникального макета.
+          </li>
+          <li>
+            <a
+              href="https://www.smashingmagazine.com/category/ui-design"
+              target="_blank"
+              >Smashing Magazine UI Design</a
+            >
+            — Сборник статей о современных подходах к дизайну интерфейсов,
+            которые помогли нам сделать сайт более стильным и функциональным.
+          </li>
+          <li>
+            <a href="https://www.autodesk.com/learn" target="_blank"
+              >AutoCAD Learn</a
+            >
+            — Обучающие материалы по САПР от Autodesk, которые помогли нам лучше
+            понять контекст нашего проекта.
+          </li>
+          <li>
+            <a href="https://css-tricks.com/" target="_blank">CSS-Tricks</a> —
+            Ресурс с практическими советами по CSS, который мы использовали для
+            создания адаптивного дизайна.
+          </li>
+          <li>
+            <a href="https://guides.github.com/" target="_blank"
+              >GitHub Guides</a
+            >
+            — Руководства по использованию GitHub, которые помогли нам настроить
+            хостинг на GitHub Pages.
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="to-top" id="toTop">↑</div>
+
+    <footer>
+      <p>
+        © 2025 Визитная карточка САПР. Создано с ❤️ и энтузиазмом нашей
+        командой.
+      </p>
+    </footer>
+
+    <script>
+      // Плавная прокрутка для навигации
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute("href").substring(1);
+          const targetSection = document.getElementById(targetId);
+          if (targetSection) {
+            window.scrollTo({
+              top: targetSection.offsetTop - 100,
+              behavior: "smooth",
+            });
+          }
+        });
+      });
+
+      // Логика для кнопки "Наверх"
+      const toTopButton = document.getElementById("toTop");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 300) {
+          toTopButton.style.display = "block";
+          toTopButton.style.opacity = "1";
+        } else {
+          toTopButton.style.opacity = "0";
+          setTimeout(() => {
+            toTopButton.style.display = "none";
+          }, 300);
+        }
+      });
+
+      toTopButton.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+    </script>
+  </body>
+</html>
